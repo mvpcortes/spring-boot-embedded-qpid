@@ -1,0 +1,43 @@
+{
+  "name": "${qpid.name}",
+  "modelVersion": "7.0",
+  "authenticationproviders": [
+    {
+      "name": "hardcoded",
+      "type": "Plain",
+      "secureOnlyMechanisms": [],
+      "users": [
+        {
+          "name": "${auth.username}",
+          "password": "${auth.password}",
+          "type": "managed"
+        }
+      ]
+    }
+  ],
+  "ports": [
+    {
+      "name": "AMQP",
+      "port": "${qpid.port}",
+      "bindingAddress": "127.0.0.1",
+      "protocols": [
+        "AMQP_0_9_1"
+      ],
+      "authenticationProvider": "hardcoded",
+      "virtualhostaliases": [
+        {
+          "name": "defaultAlias",
+          "type": "defaultAlias"
+        }
+      ]
+    }
+  ],
+  "virtualhostnodes": [
+    {
+      "name": "default",
+      "type": "Memory",
+      "defaultVirtualHostNode": "true",
+      "virtualHostInitialConfiguration": "{\"type\": \"Memory\"}"
+    }
+  ]
+}
