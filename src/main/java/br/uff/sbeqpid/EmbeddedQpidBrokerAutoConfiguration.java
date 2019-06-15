@@ -1,18 +1,15 @@
 package br.uff.sbeqpid;
 
-import com.google.common.io.Files;
 import org.apache.qpid.server.SystemLauncher;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-
-import java.io.File;
-import java.util.function.Supplier;
 
 import static br.uff.sbeqpid.EmbeddedQpidBroker.STR_FILE_CONFIG_NAME;
 
@@ -22,19 +19,11 @@ import static br.uff.sbeqpid.EmbeddedQpidBroker.STR_FILE_CONFIG_NAME;
  * was used to develop it
  */
 @Configuration
-//@AutoConfigureBefore({JmsAutoConfiguration.class})
-//@AutoConfigureAfter({JndiConnectionFactoryAutoConfiguration.class})
-//@EnableConfigurationProperties({ActiveMQProperties.class, JmsProperties.class})
-//@Import({ActiveMQXAConnectionFactoryConfiguration.class, ActiveMQConnectionFactoryConfiguration.class})
 @ConditionalOnClass({SystemLauncher.class})
 @ConditionalOnMissingBean({EmbeddedQpidBroker.class})
+@AutoConfigureBefore(RabbitAutoConfiguration.class)
 public class EmbeddedQpidBrokerAutoConfiguration {
 
-    @Bean
-    @Qualifier("fileConfigConfiguration")
-    public Supplier<File> embbededQpidBrokerPropertiessupplierDirectoryConfiguration(){
-        return ()->Files.createTempDir();
-    }
     @Bean
     @ConfigurationProperties(prefix = "embbeded-qpid")
     @ConditionalOnMissingBean({EmbeddedQpidBrokerProperties .class})

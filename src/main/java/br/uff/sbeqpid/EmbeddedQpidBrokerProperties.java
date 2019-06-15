@@ -3,12 +3,9 @@ package br.uff.sbeqpid;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
 
-import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class EmbeddedQpidBrokerProperties {
 
@@ -34,20 +31,11 @@ public class EmbeddedQpidBrokerProperties {
         }
 
         public String getPassword() {
-            if(password == null || password.trim().isEmpty()){
-                   password = generateRandomPassword();
-            }
             return password;
         }
 
         public void setPassword(String password) {
             this.password = password;
-        }
-
-        public String generateRandomPassword() {
-            Random random = new SecureRandom();
-            IntStream specialChars = random.ints(124, 33, 45);
-            return specialChars.mapToObj(data -> String.valueOf((char) data)).collect(Collectors.joining(",", "[", "]"));
         }
     }
 
@@ -58,6 +46,10 @@ public class EmbeddedQpidBrokerProperties {
     private int port = 5672;
 
     private @JsonIgnore JavaPropsMapper propMapper = new JavaPropsMapper();
+
+    public void setPropMapper(JavaPropsMapper propMapper) {
+        this.propMapper = propMapper;
+    }
 
     public Auth getAuth() {
         return auth;
@@ -85,7 +77,7 @@ public class EmbeddedQpidBrokerProperties {
                     .collect(Collectors.toMap(name -> "qpid."+name, properties::getProperty, (a, b) -> b));
 
         }catch (Exception e){
-            throw new IllegalStateException("Cannot serialize json", e);
+            throw new IllegalStateException("Cannot serialize " + getClass().getSimpleName(), e);
         }
     }
 }

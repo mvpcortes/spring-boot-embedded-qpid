@@ -8,8 +8,8 @@
       "secureOnlyMechanisms": [],
       "users": [
         {
-          "name": "${auth.username}",
-          "password": "${auth.password}",
+          "name": "${qpid.auth.username}",
+          "password": "${qpid.auth.password}",
           "type": "managed"
         }
       ]
