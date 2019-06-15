@@ -41,6 +41,11 @@ public class EmbeddedQpidBrokerProperties {
 
     private Auth auth = new Auth();
 
+
+    /**
+     * Name of the broker
+     */
+    private String name = "EMBEDDED-BROKER";
     /**
      * Port used by qpid.
      */
@@ -86,5 +91,23 @@ public class EmbeddedQpidBrokerProperties {
         }catch (Exception e){
             throw new IllegalStateException("Cannot serialize " + getClass().getSimpleName(), e);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public EmbeddedQpidBrokerProperties setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public EmbeddedQpidBrokerProperties setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
     }
 }
