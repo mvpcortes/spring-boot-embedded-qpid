@@ -40,10 +40,17 @@ public class EmbeddedQpidBrokerProperties {
     }
 
     private Auth auth = new Auth();
+
     /**
      * Port used by qpid.
      */
     private int port = 5672;
+
+
+    /**
+     * Enable/disable broker
+     */
+    private boolean enabled = true;
 
     private @JsonIgnore JavaPropsMapper propMapper = new JavaPropsMapper();
 

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,11 @@ import static br.uff.sbeqpid.EmbeddedQpidBroker.STR_FILE_CONFIG_NAME;
 @ConditionalOnClass({SystemLauncher.class})
 @ConditionalOnMissingBean({EmbeddedQpidBroker.class})
 @AutoConfigureBefore(RabbitAutoConfiguration.class)
+@ConditionalOnProperty(name="embedded-qpid.enabled", havingValue = "true", matchIfMissing = true)
 public class EmbeddedQpidBrokerAutoConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "embbeded-qpid")
+    @ConfigurationProperties(prefix = "embedded-qpid")
     @ConditionalOnMissingBean({EmbeddedQpidBrokerProperties .class})
     public EmbeddedQpidBrokerProperties embeddedQpidBrokerProperties(){
         return new EmbeddedQpidBrokerProperties();
