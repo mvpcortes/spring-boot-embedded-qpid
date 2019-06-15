@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.uff</groupId>
     <artifactId>spring-boot-pqid-broker</artifactId>
-    <version>1.0rc1</version>
+    <version>1.0.0</version>
     <!-- você deve trocar a versão para 1.2 ou 1.2.desenv-->
     <packaging>jar</packaging>
     <parent>
